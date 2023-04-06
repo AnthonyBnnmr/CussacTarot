@@ -10,8 +10,8 @@ namespace CussacTarot.Core.Services
 
         public static IDbConnectionFactory CreateBdd()
         {
-            IDbConnectionFactory dbFactory = CreateConnectionBdd();
-            System.Data.IDbConnection db = dbFactory.OpenDbConnection();
+            IDbConnectionFactory dbFactory = CreateConnectionBdd();            
+            System.Data.IDbConnection db = dbFactory.OpenDbConnection();            
             db.CreateTableIfNotExists<Gamer>();
             db.CreateTableIfNotExists<GameSheet>();
             db.CreateTableIfNotExists<ScoreByGamer>();
