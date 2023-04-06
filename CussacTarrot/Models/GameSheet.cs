@@ -12,7 +12,7 @@ namespace CussacTarot.Models
         [AutoIncrement]
         public int Id { get; init; }
         public int GamerId { get; init; }
-        public Gamer Gamer { get; init; }        
+        public Gamer Gamer { get; init; }
         public int Score { get; init; }
         public int GameSheetId { get; init; }
     }

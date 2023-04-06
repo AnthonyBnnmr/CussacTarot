@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CussacTarot.GameSheets.Domains.Messages
 {
-    public record CreateOrUpdateGameSheetMessage(GameSheetViewModel? GameSheetViewModel)
+    public record CreateOrUpdateGameSheetMessage(GameSheetViewModel GameSheetViewModel)
     {
     }
 }

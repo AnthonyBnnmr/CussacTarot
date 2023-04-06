@@ -9,12 +9,12 @@ public class ScoreByGamerViewModel : ObservableObject
     private int _Id;
     public int Id
     {
-        get => _Id; 
+        get => _Id;
         private set => SetProperty(ref _Id, value);
     }
 
-    private GamerViewModel? _Gamer;
-    public GamerViewModel? Gamer
+    private GamerViewModel _Gamer;
+    public GamerViewModel Gamer
     {
         get => _Gamer;
         private set => SetProperty(ref _Gamer, value);
@@ -23,31 +23,31 @@ public class ScoreByGamerViewModel : ObservableObject
     private int? _GameSheetId;
     public int? GameSheetId
     {
-        get => _GameSheetId; 
-        private set => SetProperty(ref _GameSheetId, value);        
+        get => _GameSheetId;
+        private set => SetProperty(ref _GameSheetId, value);
     }
 
     private int _Score;
     public int Score
     {
-        get => _Score;  
+        get => _Score;
         set => SetProperty(ref _Score, value);
     }
 
     public ScoreByGamerViewModel() : this(null, null)
-    {        
+    {
     }
 
-    public ScoreByGamerViewModel(ScoreByGamer? scoreByGamer, int? idGameSheet)
+    public ScoreByGamerViewModel(ScoreByGamer scoreByGamer, int? idGameSheet)
     {
-        Gamer = new GamerViewModel(scoreByGamer?.Gamer);        
+        Gamer = new GamerViewModel(scoreByGamer?.Gamer);
         Id = scoreByGamer?.Id ?? 0;
         GameSheetId = idGameSheet;
         Score = scoreByGamer?.Score ?? 0;
     }
 
     public ScoreByGamer ToModel()
-    {        
+    {
         return new ScoreByGamer
         {
             Gamer = Gamer.ToModel(),
@@ -56,6 +56,6 @@ public class ScoreByGamerViewModel : ObservableObject
             GameSheetId = GameSheetId ?? 0,
             Score = Score
         };
-    }    
+    }
 }
 

@@ -2,17 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
-using CussacTarot.Core.Repositories;
-using CussacTarot.Gamers.Domains;
 using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.Models;
+using CussacTarot.Core.Repositories;
+using CussacTarot.Gamers.Domains;
 
 namespace CussacTarot.Gamers.Presentations;
 
 public class EditGamerViewModel : ObservableRecipient
 {
-    private GamerViewModel? _Gamer;
-    private GamerViewModel? _OldGamer;
+    private GamerViewModel _Gamer;
+    private GamerViewModel _OldGamer;
     public GamerViewModel Gamer
     {
         get

@@ -58,7 +58,7 @@ namespace CussacTarot.Core.Domains
                 };
                 _GameSheetRepository.AddOrUpdate(gameSheet);
                 gamers = gamers.Skip(NUMBER_GAMER_BY_TABLE_FIVE).ToList();
-            }            
+            }
         }
     }
 }

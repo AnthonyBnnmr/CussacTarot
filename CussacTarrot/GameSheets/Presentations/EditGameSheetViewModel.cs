@@ -1,17 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Core.Repositories;
 using CussacTarot.GameSheets.Domains;
-using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Models;
 
 namespace CussacTarot.GameSheets.Presentations;
 
 public class EditGameSheetViewModel : ObservableRecipient
 {
-    private GameSheetViewModel? _GameSheet;
-    private GameSheetViewModel? _OldGameSheet;
+    private GameSheetViewModel _GameSheet;
+    private GameSheetViewModel _OldGameSheet;
     public GameSheetViewModel GameSheet
     {
         get
@@ -41,7 +41,7 @@ public class EditGameSheetViewModel : ObservableRecipient
     public IRelayCommand ValidateCommand => _ValidateCommand ??= new RelayCommand(() =>
     {
         _GameSheet.End = DateTime.Now;
-        _GameSheetsRepository.AddOrUpdate(_GameSheet.ToModel());        
+        _GameSheetsRepository.AddOrUpdate(_GameSheet.ToModel());
         Messenger.Send(new FinishEditableGameSheetMessage());
     });
 

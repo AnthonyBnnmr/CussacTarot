@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace CussacTarrot;
+namespace CussacTarot;
 
 public static class MauiProgram
 {

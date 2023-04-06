@@ -1,6 +1,6 @@
 ﻿using ServiceStack.OrmLite;
-using CussacTarot.Models;
 using ServiceStack.Data;
+using CussacTarot.Models;
 
 namespace CussacTarot.Core.Services
 {

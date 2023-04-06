@@ -7,7 +7,7 @@ namespace CussacTarot.Core.Repositories;
 public interface IAsyncRepository<Key, Value> : IDisposable
     where Value : ValueRepository<Key>
 {
-    Task<bool> AddOrUpdateAsync(Value element);    
+    Task<bool> AddOrUpdateAsync(Value element);
     Task<bool> RemoveAsync(Value element);
 
     Task<IEnumerable<Value>> GetAllAsync();

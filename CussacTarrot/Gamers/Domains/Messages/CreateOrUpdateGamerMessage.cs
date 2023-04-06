@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CussacTarot.Gamers.Domains.Messages
 {
-    public record CreateOrUpdateGamerMessage(GamerViewModel? GamerViewModel)
+    public record CreateOrUpdateGamerMessage(GamerViewModel GamerViewModel)
     {
     }
 }

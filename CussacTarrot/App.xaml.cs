@@ -1,4 +1,4 @@
-﻿namespace CussacTarrot;
+﻿namespace CussacTarot;
 
 public partial class App : Application
 {

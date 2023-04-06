@@ -48,7 +48,7 @@ public class SqlLiteRepository<Key, Value> : IRepository<Key, Value>, IAsyncRepo
 
     public async Task<bool> RemoveAsync(Value element)
     {
-        return (await _DbConnection.DeleteAsync(element)) > 0;
+        return await _DbConnection.DeleteAsync(element) > 0;
     }
 
     public async Task<IEnumerable<Value>> GetAllAsync()
@@ -58,7 +58,7 @@ public class SqlLiteRepository<Key, Value> : IRepository<Key, Value>, IAsyncRepo
 
     public async Task<bool> ClearAsync()
     {
-        return (await _DbConnection.DeleteAllAsync<Value>()) > 0;
+        return await _DbConnection.DeleteAllAsync<Value>() > 0;
     }
 
     public bool Clear()

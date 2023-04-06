@@ -3,7 +3,7 @@ using CussacTarot.Core.Repositories;
 
 namespace CussacTarot.Models;
 
-public record Gamer: ValueRepository<int>
+public record Gamer : ValueRepository<int>
 {
     [AutoIncrement]
     [Index]
@@ -13,5 +13,5 @@ public record Gamer: ValueRepository<int>
     public required string Name { get; init; }
 
     [Index]
-    public required string Surname { get; init; }    
+    public required string Surname { get; init; }
 }

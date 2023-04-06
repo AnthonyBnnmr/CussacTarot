@@ -2,10 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using CussacTarot.Core.Repositories;
-using CussacTarot.Gamers.Domains;
+using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.Models;
+using CussacTarot.Core.Repositories;
+using CussacTarot.Gamers.Domains;
 
 namespace CussacTarot.Gamers.Presentations;
 
@@ -61,24 +62,24 @@ public class ListGamersViewModel : ObservableRecipient
             InitListGamers();
             _SelectedGamers.Clear();
         }));
-        _Gamers = new();        
+        _Gamers = new();
         _SelectedGamers = new();
         _SelectedGamers.CollectionChanged += _SelectedGamers_CollectionChanged;
         InitListGamers();
-    }    
+    }
 
     private void InitListGamers()
     {
-        IEnumerable<int> gamerChecked = _Gamers.Where(e => e.Checked).Select(e => e.Id).ToList();        
+        IEnumerable<int> gamerChecked = _Gamers.Where(e => e.Checked).Select(e => e.Id).ToList();
         foreach (GamerViewModel gamerViewModel in _GamersRepository.GetAll().Select(g => new GamerViewModel(g)))
         {
             if (gamerChecked.Contains(gamerViewModel.Id))
             {
                 gamerViewModel.Checked = true;
             }
-            
+
             GamerViewModel f = _Gamers.FirstOrDefault(e => e.Id == gamerViewModel.Id);
-            if(f != null)
+            if (f != null)
             {
                 _Gamers.Remove(f);
             }
@@ -86,7 +87,7 @@ public class ListGamersViewModel : ObservableRecipient
         }
     }
 
-    private void _SelectedGamers_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void _SelectedGamers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         RemoveCommand.NotifyCanExecuteChanged();
     }

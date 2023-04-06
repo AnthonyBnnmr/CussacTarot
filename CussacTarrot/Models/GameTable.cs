@@ -16,4 +16,4 @@ public record GameTable : ValueRepository<int>
 
     [Reference]
     public List<Gamer> Gamers { get; init; } = new List<Gamer>();
-}    
+}

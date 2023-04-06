@@ -13,7 +13,7 @@ namespace CussacTarot.Core.Domains
 
         public void Launch(IEnumerable<GameSheet> listGameSheet)
         {
-            if(listGameSheet == null || !listGameSheet.Any())
+            if (listGameSheet == null || !listGameSheet.Any())
             {
                 return;
             }

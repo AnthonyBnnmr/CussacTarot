@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using CussacTarot.Core;
 using CussacTarot.Models;
+using CussacTarot.Core;
 
 namespace CussacTarot.GameSheets.Domains;
 
@@ -55,7 +55,7 @@ public class GameSheetViewModel : ObservableObject, IClone<GameSheetViewModel>
     {
     }
 
-    public GameSheetViewModel(GameSheet? gameSheet)
+    public GameSheetViewModel(GameSheet gameSheet)
     {
         Id = gameSheet?.Id ?? 0;
         Created = gameSheet?.Created ?? DateTime.MinValue;
@@ -80,7 +80,7 @@ public class GameSheetViewModel : ObservableObject, IClone<GameSheetViewModel>
         };
     }
 
-    public GameSheetViewModel? Clone()
+    public GameSheetViewModel Clone()
     {
         return MemberwiseClone() as GameSheetViewModel;
     }

@@ -11,7 +11,7 @@ namespace CussacTarot.Core.Domains
 
         public LaunchFirstGameService(IRepository<int, GameSheet> gameSheetRepository)
             : base(gameSheetRepository) { }
-        
+
 
         public void Launch(IEnumerable<Gamer> listGamers)
         {

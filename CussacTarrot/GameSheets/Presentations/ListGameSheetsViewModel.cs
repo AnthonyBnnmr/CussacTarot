@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Core.Messages;
 using CussacTarot.Core.Repositories;
 using CussacTarot.GameSheets.Domains;
@@ -8,7 +9,7 @@ using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Models;
 using System.Collections.ObjectModel;
 
-namespace CussacTarot.GamesTables.Presentations;
+namespace CussacTarot.GameSheets.Presentations;
 
 public class ListGameSheetsViewModel : ObservableRecipient
 {
@@ -17,8 +18,8 @@ public class ListGameSheetsViewModel : ObservableRecipient
     private readonly ObservableCollection<GameSheetViewModel> _GameSheets;
     public IEnumerable<GameSheetViewModel> GameSheets => _GameSheets;
 
-    private GameSheetViewModel? _SelectedGameSheet;
-    public GameSheetViewModel? SelectedGameSheet
+    private GameSheetViewModel _SelectedGameSheet;
+    public GameSheetViewModel SelectedGameSheet
     {
         get => _SelectedGameSheet;
         set => SetProperty(ref _SelectedGameSheet, value);

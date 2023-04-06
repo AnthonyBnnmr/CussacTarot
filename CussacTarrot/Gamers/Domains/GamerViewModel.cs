@@ -33,15 +33,15 @@ public class GamerViewModel : ObservableObject, IClone<GamerViewModel>
         get { return _Checked; }
         set => SetProperty(ref _Checked, value);
 
-    }    
+    }
 
 
     public GamerViewModel() : this(null)
     {
     }
 
-    public GamerViewModel(Gamer? gamer)
-    {        
+    public GamerViewModel(Gamer gamer)
+    {
         Name = gamer?.Name ?? string.Empty;
         Surname = gamer?.Surname ?? string.Empty;
         Id = gamer?.Id ?? 0;
@@ -57,6 +57,6 @@ public class GamerViewModel : ObservableObject, IClone<GamerViewModel>
         };
     }
 
-    public GamerViewModel? Clone() => MemberwiseClone() as GamerViewModel;
+    public GamerViewModel Clone() => MemberwiseClone() as GamerViewModel;
 }
 

@@ -2,11 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using CussacTarot.Core.Domains;
 using CussacTarot.Core.Messages;
-using CussacTarot.Gamers.Domains;
+using CussacTarot.Core.Domains;
 using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.GameSheets.Domains.Messages;
+using CussacTarot.Gamers.Domains;
 
 namespace CussacTarot;
 
@@ -39,7 +39,7 @@ public class MainPageViewModel : ObservableRecipient
     {
         _LaunchGameService.Launch(_GamersChecked.Select(e => e.ToModel()));
         Messenger.Send(new RefreshGamesSheetsMessage());
-    }, () => _GamersChecked.Count >= LaunchFirstGameService.NUMBER_GAMER_BY_TABLE_FOUR);
+    }, () => _GamersChecked.Count >= LaunchGameService.NUMBER_GAMER_BY_TABLE_FOUR);
 
 
     private IRelayCommand _ChangeViewCommand;
@@ -91,7 +91,7 @@ public class MainPageViewModel : ObservableRecipient
         _GamersChecked.CollectionChanged += _GamersChecked_CollectionChanged;
     }
 
-    private void _GamersChecked_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void _GamersChecked_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         LaunchGameCommand.NotifyCanExecuteChanged();
     }
