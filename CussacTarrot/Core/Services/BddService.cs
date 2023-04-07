@@ -6,7 +6,7 @@ namespace CussacTarot.Core.Services
 {
     public static class LaunchBddService
     {
-        private const string CONNECTION_BDD = "tarrot_cussac.sqlite";
+        private static string CONNECTION_BDD = $"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}/cussac_tarot.db";
 
         public static IDbConnectionFactory CreateBdd()
         {

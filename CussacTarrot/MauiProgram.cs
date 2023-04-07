@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CussacTarot.Core.Domains;
 using CussacTarot.Core.Repositories;
 using CussacTarot.Core.Services;
@@ -8,6 +9,7 @@ using CussacTarot.Models;
 using Microsoft.Extensions.Logging;
 using ServiceStack.Data;
 using System.Globalization;
+using UraniumUI;
 
 namespace CussacTarot;
 
@@ -27,6 +29,9 @@ public static class MauiProgram
         services
             .AddSingleton(LaunchBddService.CreateBdd())
             .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
+            .AddTransient<ILaunchGameService<Gamer>, LaunchFirstGameService>()
+            .AddTransient<ILaunchGameService<GameSheet>, LaunchSecondGameService>()
+            .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
             .AddTransient<IRepository<int, Gamer>>((s) => new SqlLiteRepository<int, Gamer>(s.GetRequiredService<IDbConnectionFactory>()))
             .AddTransient<IRepository<int, GameSheet>>((s) => new SqlLiteRepository<int, GameSheet>(s.GetRequiredService<IDbConnectionFactory>()))
             .AddTransient<ListGamersViewModel>()
@@ -40,8 +45,11 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseUraniumUI()            
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
+                fonts.AddFontAwesomeIconFonts();
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });

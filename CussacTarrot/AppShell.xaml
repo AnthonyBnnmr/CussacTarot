@@ -7,7 +7,7 @@
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Home"
+        Title="Cussac Tarot"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

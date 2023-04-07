@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
 using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.Models;
 using CussacTarot.Core.Repositories;
@@ -57,6 +56,9 @@ public class EditGamerViewModel : ObservableRecipient
         Messenger.Send(new FinishEditableGamerMessage());
     });
 
+    public EditGamerViewModel()
+    {        
+    }
 
     public EditGamerViewModel(IRepository<int, Gamer> gamersRepository)
     {

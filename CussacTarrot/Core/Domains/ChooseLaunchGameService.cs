@@ -10,8 +10,8 @@ namespace CussacTarot.Core.Domains
 
         public ChooseLaunchGameService(ILaunchGameService<Gamer> launchFirstGameService, ILaunchGameService<GameSheet> launchSecondGameService)
         {
-            launchFirstGameService = launchFirstGameService ?? throw new ArgumentNullException(nameof(launchFirstGameService));
-            launchSecondGameService = launchSecondGameService ?? throw new ArgumentNullException(nameof(launchSecondGameService));
+            _LaunchFirstGameService = launchFirstGameService ?? throw new ArgumentNullException(nameof(launchFirstGameService));
+            _LaunchSecondGameService = launchSecondGameService ?? throw new ArgumentNullException(nameof(launchSecondGameService));
         }
 
 

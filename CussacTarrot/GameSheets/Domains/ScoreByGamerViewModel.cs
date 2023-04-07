@@ -40,7 +40,7 @@ public class ScoreByGamerViewModel : ObservableObject
 
     public ScoreByGamerViewModel(ScoreByGamer scoreByGamer, int? idGameSheet)
     {
-        Gamer = new GamerViewModel(scoreByGamer?.Gamer);
+        Gamer = new GamerViewModel(scoreByGamer?.Gamer, null, null);
         Id = scoreByGamer?.Id ?? 0;
         GameSheetId = idGameSheet;
         Score = scoreByGamer?.Score ?? 0;

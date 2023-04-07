@@ -7,26 +7,27 @@ using CussacTarot.Core.Domains;
 using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Gamers.Domains;
+using CussacTarot.Gamers.Presentations;
 
 namespace CussacTarot;
 
 public class MainPageViewModel : ObservableRecipient
 {
-    private readonly ILaunchGameService<object> _LaunchGameService;
-
-    private bool _IsOpenPopUp;
-    public bool IsOpenPopUp
+    private readonly ILaunchGameService _LaunchGameService;
+    
+    private Func<View, Task<object?>> _ShowPopUp;
+    public Func<View, Task<object?>> ShowPopUp
     {
-        get => _IsOpenPopUp;
-        set => SetProperty(ref _IsOpenPopUp, value);
+        get => _ShowPopUp;
+        set => SetProperty(ref _ShowPopUp, value);
     }
 
-    //private UIElement _ElementInPopUp;
-    //public UIElement? ElementInPopUp
-    //{
-    //    get => _ElementInPopUp;
-    //    set => SetProperty(ref _ElementInPopUp, value);
-    //}
+    private Action _ClosePopUp;
+    public Action ClosePopUp
+    {
+        get => _ClosePopUp;
+        set => SetProperty(ref _ClosePopUp, value);
+    }
 
     private readonly ObservableCollection<GamerViewModel> _GamersChecked;
     public ObservableCollection<GamerViewModel> GamersChecked
@@ -62,15 +63,13 @@ public class MainPageViewModel : ObservableRecipient
     public string NameButton => ShowGamer ? "Afficher les parties" : "Afficher les joueurs";
 
 
-    public MainPageViewModel(ILaunchGameService<object> launchGameService)
+    public MainPageViewModel(ILaunchGameService launchGameService)
     {
         _LaunchGameService = launchGameService ?? throw new ArgumentNullException(nameof(launchGameService));
 
-        //Messenger.Register<CreateOrUpdateGamerMessage>(this, (recipient, message) =>
-        //{
-        //    ElementInPopUp = new EditGamerView(message.GamerViewModel);
-        //    IsOpenPopUp = true;
-        //});
+        Messenger.Register<CreateOrUpdateGamerMessage>(this, (recipient, message) =>
+            ShowPopUp?.Invoke(new EditGamerView(message.GamerViewModel)));
+
         //Messenger.Register<CreateOrUpdateGameSheetMessage>(this, (recipient, message) =>
         //{
         //    ElementInPopUp = new EditGameSheetView(message.GameSheetViewModel);
@@ -78,13 +77,11 @@ public class MainPageViewModel : ObservableRecipient
         //});
         Messenger.Register<FinishEditableGamerMessage>(this, (recipient, message) =>
         {
-            //ElementInPopUp = null;
-            IsOpenPopUp = false;
+            ClosePopUp?.Invoke();
         });
         Messenger.Register<FinishEditableGameSheetMessage>(this, (recipient, message) =>
         {
-            //ElementInPopUp = null;
-            IsOpenPopUp = false;
+            ClosePopUp?.Invoke();
         });
 
         _GamersChecked = new();
