@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CussacTarot.Models;
 using CussacTarot.Core;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CussacTarot.GameSheets.Domains;
 
@@ -48,24 +49,34 @@ public class GameSheetViewModel : ObservableObject, IClone<GameSheetViewModel>
         get => _End != null;
     }
 
+    private IRelayCommand _StartCommand;
+    public IRelayCommand StartCommand => _StartCommand;
+
+    private IRelayCommand _FinnishCommand;
+    public IRelayCommand FinnishCommand => _FinnishCommand;
+
+
     private readonly ObservableCollection<ScoreByGamerViewModel> _Scores;
     public ObservableCollection<ScoreByGamerViewModel> Scores => _Scores;
 
-    public GameSheetViewModel() : this(null)
+    public GameSheetViewModel() : this(null, null, null)
     {
     }
 
-    public GameSheetViewModel(GameSheet gameSheet)
+    public GameSheetViewModel(GameSheet gameSheet, IRelayCommand<GameSheetViewModel> startCommand, IRelayCommand<GameSheetViewModel> finnishCommand)
     {
         Id = gameSheet?.Id ?? 0;
         Created = gameSheet?.Created ?? DateTime.MinValue;
-        Start = gameSheet?.Start;
-        End = gameSheet?.End;
+        Start = gameSheet?.PeriodGame?.Start;
+        End = gameSheet?.PeriodGame?.End;
         _Scores = new();
         foreach (ScoreByGamer scoreByGamer in gameSheet?.Scores ?? new())
         {
             Scores.Add(new ScoreByGamerViewModel(scoreByGamer, Id));
         }
+        _StartCommand = startCommand == null ? throw new ArgumentNullException(nameof(startCommand)) : new RelayCommand(() => startCommand.Execute(this), () => startCommand.CanExecute(this));
+        _FinnishCommand = finnishCommand == null ? throw new ArgumentNullException(nameof(finnishCommand)) : new RelayCommand(() => finnishCommand.Execute(this), () => finnishCommand.CanExecute(this));
+
     }
 
     public GameSheet ToModel()
@@ -74,9 +85,12 @@ public class GameSheetViewModel : ObservableObject, IClone<GameSheetViewModel>
         {
             Id = Id,
             Created = Created,
-            End = End,
+            PeriodGame = new()
+            {
+                Start = Start,
+                End = End
+            },
             Scores = Scores.Select(e => e.ToModel()).ToList(),
-            Start = Start
         };
     }
 

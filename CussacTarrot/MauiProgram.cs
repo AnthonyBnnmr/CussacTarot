@@ -6,6 +6,8 @@ using CussacTarot.Core.Services;
 using CussacTarot.Gamers.Presentations;
 using CussacTarot.GameSheets.Presentations;
 using CussacTarot.Models;
+using CussacTarot.Ranking.Presentations;
+using InputKit.Handlers;
 using Microsoft.Extensions.Logging;
 using ServiceStack.Data;
 using System.Globalization;
@@ -28,13 +30,15 @@ public static class MauiProgram
         ServiceCollection services = new();
         services
             .AddSingleton(LaunchBddService.CreateBdd())
+            .AddTransient<RankingService>()
             .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
             .AddTransient<ILaunchGameService<Gamer>, LaunchFirstGameService>()
             .AddTransient<ILaunchGameService<GameSheet>, LaunchSecondGameService>()
             .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
             .AddTransient<IRepository<int, Gamer>>((s) => new SqlLiteRepository<int, Gamer>(s.GetRequiredService<IDbConnectionFactory>()))
             .AddTransient<IRepository<int, GameSheet>>((s) => new SqlLiteRepository<int, GameSheet>(s.GetRequiredService<IDbConnectionFactory>()))
-            .AddTransient<ListGamersViewModel>()
+            .AddTransient<ListGamersViewModel>()            
+            .AddTransient<RankingViewModel>()            
             .AddTransient<EditGamerViewModel>()
             .AddTransient<ListGameSheetsViewModel>()
             .AddTransient<EditGameSheetViewModel>()
@@ -46,6 +50,10 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseUraniumUI()            
+            .ConfigureMauiHandlers(handlers =>
+            {                
+                handlers.AddInputKitHandlers();
+            })
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CussacTarot.GameSheets.Presentations.EditGameSheetView"
+             xmlns:local="clr-namespace:CussacTarot.GameSheets.Presentations"
+             xmlns:uValidation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:uControl="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:uLayout="clr-namespace:InputKit.Shared.Layouts;assembly=InputKit.Maui">
+    <ContentView.BindingContext>
+        <local:EditGameSheetViewModel />
+    </ContentView.BindingContext>
+    <VerticalStackLayout>
+        <uControl:FormView SubmitCommand="{Binding ValidateCommand}">
+            <uControl:AdvancedEntry Title="Date de lancement"  Text="{Binding GameSheet.Start}" IsDisabled="True"/>
+            <uControl:AdvancedEntry Title="Date de fin" Text="{Binding GameSheet.End}"  IsDisabled="True"/>
+            <CollectionView ItemsSource="{Binding GameSheet.Scores}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="5" Padding="8" >
+                            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Gamer.NameSurname}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+                                <uControl:AdvancedEntry Title="Score"  Text="{Binding Score}" IsDisabled="False">
+                                    <uControl:AdvancedEntry.Validations>
+                                        <uValidation:NumericValidation/>
+                                        <uValidation:RequiredValidation/>
+                                    </uControl:AdvancedEntry.Validations>
+                                </uControl:AdvancedEntry>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <HorizontalStackLayout>
+                <Button Text="Valider" uControl:FormView.IsSubmitButton="True" />
+                <Button Text="Annuler" Command="{Binding CancelCommand}"></Button>
+                <Button Text="Fermer" Command="{Binding CloseCommand}"></Button>
+            </HorizontalStackLayout>
+        </uControl:FormView>
+    </VerticalStackLayout>
+</ContentView>

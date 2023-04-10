@@ -5,6 +5,7 @@ using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Core.Repositories;
 using CussacTarot.GameSheets.Domains;
 using CussacTarot.Models;
+using CussacTarot.Core.Messages;
 
 namespace CussacTarot.GameSheets.Presentations;
 
@@ -16,16 +17,15 @@ public class EditGameSheetViewModel : ObservableRecipient
     {
         get
         {
-            if (_GameSheet == null)
-            {
-                _GameSheet = new GameSheetViewModel();
-                _OldGameSheet = new GameSheetViewModel();
-            }
-
             return _GameSheet;
         }
         set
         {
+            if (_GameSheet == null && value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             if (_GameSheet == null && value != null)
             {
                 _OldGameSheet = value.Clone();
@@ -43,6 +43,7 @@ public class EditGameSheetViewModel : ObservableRecipient
         _GameSheet.End = DateTime.Now;
         _GameSheetsRepository.AddOrUpdate(_GameSheet.ToModel());
         Messenger.Send(new FinishEditableGameSheetMessage());
+        Messenger.Send(new RefreshRankingMessage());
     });
 
     private IRelayCommand _CancelCommand;
@@ -57,6 +58,9 @@ public class EditGameSheetViewModel : ObservableRecipient
         Messenger.Send(new FinishEditableGameSheetMessage());
     });
 
+    public EditGameSheetViewModel()
+    {
+    }
 
     public EditGameSheetViewModel(IRepository<int, GameSheet> gameSheetsRepository)
     {

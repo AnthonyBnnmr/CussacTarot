@@ -5,7 +5,6 @@ using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Core.Messages;
 using CussacTarot.Core.Repositories;
 using CussacTarot.GameSheets.Domains;
-using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Models;
 using System.Collections.ObjectModel;
 
@@ -25,22 +24,38 @@ public class ListGameSheetsViewModel : ObservableRecipient
         set => SetProperty(ref _SelectedGameSheet, value);
     }
 
-    private IRelayCommand _StartCommand;
-    public IRelayCommand StartCommand => _StartCommand ??= new RelayCommand<GameSheetViewModel>((gameSheet) =>
+    private IRelayCommand<GameSheetViewModel> _StartCommand;
+    public IRelayCommand<GameSheetViewModel> StartCommand => _StartCommand ??= new RelayCommand<GameSheetViewModel>((gameSheet) =>
     {
         gameSheet.Start = DateTime.Now;
-        _GameSheetRepository.AddOrUpdate(gameSheet.ToModel());
-        StartCommand.NotifyCanExecuteChanged();
-        FinishCommand.NotifyCanExecuteChanged();
+        _GameSheetRepository.AddOrUpdate(gameSheet.ToModel());       
+        foreach (GameSheetViewModel gameSheetVM in GameSheets)
+        {
+            gameSheetVM.StartCommand.NotifyCanExecuteChanged();
+            gameSheetVM.FinnishCommand.NotifyCanExecuteChanged();
+        }
     }, (gameSheet) => gameSheet != null && gameSheet.Start == null);
 
-    private IRelayCommand _FinishCommand;
-    public IRelayCommand FinishCommand => _FinishCommand ??= new RelayCommand<GameSheetViewModel>((gameSheet) =>
+    private IRelayCommand<GameSheetViewModel> _FinishCommand;
+    public IRelayCommand<GameSheetViewModel> FinishCommand => _FinishCommand ??= new RelayCommand<GameSheetViewModel>((gameSheet) =>
     {
-        Messenger.Send(new CreateOrUpdateGameSheetMessage(gameSheet));
-        StartCommand.NotifyCanExecuteChanged();
-        FinishCommand.NotifyCanExecuteChanged();
+        if(gameSheet == null)
+        {
+            gameSheet = new GameSheetViewModel(null, StartCommand, FinishCommand);
+        }
+
+        Messenger.Send(new CreateOrUpdateGameSheetMessage(gameSheet));       
+        foreach(GameSheetViewModel gameSheetVM in GameSheets)
+        {
+            gameSheetVM.StartCommand.NotifyCanExecuteChanged();
+            gameSheetVM.FinnishCommand.NotifyCanExecuteChanged();
+        }
     }, (gameSheet) => gameSheet != null && gameSheet.Start != null && !gameSheet.IsFinish);
+
+
+    public ListGameSheetsViewModel()
+    {
+    }
 
     public ListGameSheetsViewModel(IRepository<int, GameSheet> gameSheetRepository)
     {
@@ -61,10 +76,10 @@ public class ListGameSheetsViewModel : ObservableRecipient
 
     private void InitListGameSheets()
     {
-        _GameSheets.Clear();
+        _GameSheets.Clear();        
         foreach (GameSheet gameSheet in _GameSheetRepository.GetAll())
         {
-            _GameSheets.Add(new GameSheetViewModel(gameSheet));
+            _GameSheets.Add(new GameSheetViewModel(gameSheet, StartCommand, FinishCommand));
         }
     }
 }

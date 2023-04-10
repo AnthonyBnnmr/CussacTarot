@@ -8,13 +8,14 @@ using CussacTarot.Gamers.Domains.Messages;
 using CussacTarot.GameSheets.Domains.Messages;
 using CussacTarot.Gamers.Domains;
 using CussacTarot.Gamers.Presentations;
+using CussacTarot.GameSheets.Presentations;
 
 namespace CussacTarot;
 
 public class MainPageViewModel : ObservableRecipient
 {
     private readonly ILaunchGameService _LaunchGameService;
-    
+
     private Func<View, Task<object?>> _ShowPopUp;
     public Func<View, Task<object?>> ShowPopUp
     {
@@ -46,8 +47,18 @@ public class MainPageViewModel : ObservableRecipient
     private IRelayCommand _ChangeViewCommand;
     public IRelayCommand ChangeViewCommand => _ChangeViewCommand ??= new RelayCommand(() =>
     {
-        ShowGamer = !ShowGamer;
+        if (ShowGamer)
+            ShowGameSheet = true;
+        else        
+            ShowGamer = true;
     });
+
+    private IRelayCommand _ShowRankingCommand;
+    public IRelayCommand ShowRankingCommand => _ShowRankingCommand ??= new RelayCommand(() =>
+    {
+        ShowRanking = true;
+    });
+    
 
     private bool _ShowGamer = true;
     public bool ShowGamer
@@ -55,37 +66,79 @@ public class MainPageViewModel : ObservableRecipient
         get => _ShowGamer;
         set
         {
+
+            if (value)
+            {
+                ShowRanking = false;
+                ShowGameSheet = false;
+            }
             SetProperty(ref _ShowGamer, value);
-            OnPropertyChanged(nameof(NameButton));
+            OnPropertyChanged(nameof(NameButton));            
+        }
+    }
+
+    private bool _ShowRanking = false;
+    public bool ShowRanking
+    {
+        get => _ShowRanking;
+        set
+        {
+
+            if (value)
+            {
+                ShowGamer = false;
+                ShowGameSheet = false;
+            }
+            SetProperty(ref _ShowRanking, value);
+            OnPropertyChanged(nameof(NameButton));            
+        }
+    }
+
+    private bool _ShowGameSheet = false;
+    public bool ShowGameSheet
+    {
+        get => _ShowGameSheet;
+        set
+        {
+            if (value)
+            {
+                ShowGamer = false;
+                ShowRanking = false;
+            }
+
+            SetProperty(ref _ShowGameSheet, value);            
+            OnPropertyChanged(nameof(ShowGameSheet));
         }
     }
 
     public string NameButton => ShowGamer ? "Afficher les parties" : "Afficher les joueurs";
 
 
-    public MainPageViewModel(ILaunchGameService launchGameService)
+    public MainPageViewModel()
     {
-        _LaunchGameService = launchGameService ?? throw new ArgumentNullException(nameof(launchGameService));
+        _GamersChecked = new();
+        _GamersChecked.CollectionChanged += _GamersChecked_CollectionChanged;
 
         Messenger.Register<CreateOrUpdateGamerMessage>(this, (recipient, message) =>
             ShowPopUp?.Invoke(new EditGamerView(message.GamerViewModel)));
 
-        //Messenger.Register<CreateOrUpdateGameSheetMessage>(this, (recipient, message) =>
-        //{
-        //    ElementInPopUp = new EditGameSheetView(message.GameSheetViewModel);
-        //    IsOpenPopUp = true;
-        //});
+        Messenger.Register<CreateOrUpdateGameSheetMessage>(this, (recipient, message) =>
+            ShowPopUp?.Invoke(new EditGameSheetView(message.GameSheetViewModel)));
+
         Messenger.Register<FinishEditableGamerMessage>(this, (recipient, message) =>
         {
             ClosePopUp?.Invoke();
         });
+
         Messenger.Register<FinishEditableGameSheetMessage>(this, (recipient, message) =>
         {
             ClosePopUp?.Invoke();
         });
+    }
 
-        _GamersChecked = new();
-        _GamersChecked.CollectionChanged += _GamersChecked_CollectionChanged;
+    public MainPageViewModel(ILaunchGameService launchGameService) : this()
+    {
+        _LaunchGameService = launchGameService ?? throw new ArgumentNullException(nameof(launchGameService));
     }
 
     private void _GamersChecked_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

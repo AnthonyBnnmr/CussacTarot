@@ -17,31 +17,35 @@ public class ListGamersViewModel : ObservableRecipient
     public IRelayCommand<GamerViewModel> RemoveCommand => _RemoveCommand ??= new RelayCommand<GamerViewModel>((gamer) =>
     {
         _GamersRepository.Remove(gamer.ToModel());
-        _Gamers.Remove(gamer);        
+        _Gamers.Remove(gamer);
     }, e =>
     {
         return e != null;
-    });    
+    });
 
     private IRelayCommand<GamerViewModel> _CreateCommand;
     public IRelayCommand<GamerViewModel> CreateCommand => _CreateCommand ??= new RelayCommand<GamerViewModel>((gamer) =>
     {
+        if (gamer == null)
+        {
+            gamer = new GamerViewModel(null, CreateCommand, RemoveCommand);
+        }
         Messenger.Send(new CreateOrUpdateGamerMessage(gamer));
-    });    
+    });
 
     private readonly ObservableCollection<GamerViewModel> _Gamers;
 
     public ObservableCollection<GamerViewModel> Gamers => _Gamers;
 
-    private GamerViewModel _SelectedGamer;
-    public GamerViewModel SelectedGamer
-    {
-        get => _SelectedGamer;
-        set
-        {
-            SetProperty(ref _SelectedGamer, value);            
-        }
-    }
+    //private GamerViewModel _SelectedGamer;
+    //public GamerViewModel SelectedGamer
+    //{
+    //    get => _SelectedGamer;
+    //    set
+    //    {
+    //        SetProperty(ref _SelectedGamer, value);            
+    //    }
+    //}
 
     public ListGamersViewModel()
     {
@@ -57,10 +61,11 @@ public class ListGamersViewModel : ObservableRecipient
         _Gamers = new();
         InitListGamers();
     }
-
+    
     private void InitListGamers()
     {
         IEnumerable<int> gamerChecked = _Gamers.Where(e => e.Checked).Select(e => e.Id).ToList();
+        _Gamers.Clear();
         foreach (GamerViewModel gamerViewModel in _GamersRepository.GetAll().Select(g => new GamerViewModel(g, CreateCommand, RemoveCommand)))
         {
             if (gamerChecked.Contains(gamerViewModel.Id))
@@ -68,11 +73,6 @@ public class ListGamersViewModel : ObservableRecipient
                 gamerViewModel.Checked = true;
             }
 
-            GamerViewModel f = _Gamers.FirstOrDefault(e => e.Id == gamerViewModel.Id);
-            if (f != null)
-            {
-                _Gamers.Remove(f);
-            }
             _Gamers.Add(gamerViewModel);
         }
     }

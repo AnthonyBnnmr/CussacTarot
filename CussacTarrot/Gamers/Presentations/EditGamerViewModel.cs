@@ -15,17 +15,16 @@ public class EditGamerViewModel : ObservableRecipient
     public GamerViewModel Gamer
     {
         get
-        {
-            if (_Gamer == null)
-            {
-                _Gamer = new GamerViewModel();
-                _OldGamer = new GamerViewModel();
-            }
-
+        {            
             return _Gamer;
         }
         set
         {
+            if( _Gamer == null && value == null) 
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             if (_Gamer == null && value != null)
             {
                 _OldGamer = value.Clone();

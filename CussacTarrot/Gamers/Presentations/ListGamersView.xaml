@@ -3,17 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CussacTarot.Gamers.Presentations.ListGamersView"
              xmlns:local="clr-namespace:CussacTarot.Gamers.Presentations"             
-             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome">
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
     <ContentView.BindingContext>
         <local:ListGamersViewModel />
     </ContentView.BindingContext>
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="listView" ItemsSource="{Binding Gamers}" SelectedItem="{Binding SelectedGamer}" SelectionMode="None" Grid.Row="0">
+        <ListView x:Name="listView" ItemsSource="{Binding Gamers}" SelectionMode="None" Grid.Row="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

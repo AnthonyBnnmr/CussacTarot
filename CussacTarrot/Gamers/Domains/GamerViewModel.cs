@@ -18,7 +18,8 @@ public class GamerViewModel : ObservableObject, IClone<GamerViewModel>
     public string Name
     {
         get { return _Name; }
-        set {
+        set
+        {
             SetProperty(ref _Name, value);
             OnPropertyChanged(nameof(NameSurname));
         }
@@ -62,7 +63,7 @@ public class GamerViewModel : ObservableObject, IClone<GamerViewModel>
         Surname = gamer?.Surname ?? string.Empty;
         Id = gamer?.Id ?? 0;
         _CreateCommand = createCommand != null ? new RelayCommand(() => createCommand.Execute(this), () => createCommand.CanExecute(this)) : null;
-        _RemoveCommand = removeCommand != null ?  new RelayCommand(() => removeCommand.Execute(this), () => removeCommand.CanExecute(this)) : null;
+        _RemoveCommand = removeCommand != null ? new RelayCommand(() => removeCommand.Execute(this), () => removeCommand.CanExecute(this)) : null;
     }
 
     public Gamer ToModel()
