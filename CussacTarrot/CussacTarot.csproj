@@ -66,16 +66,28 @@
 	  <MauiXaml Update="Gamers\Presentations\EditGamerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Gamers\Presentations\GamerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Gamers\Presentations\ListGamersView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="GameSheets\Presentations\EditGameSheetView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="GameSheets\Presentations\GameSheetPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="GameSheets\Presentations\ListGameSheetsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="PopUp.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Ranking\Presentations\RankingNowPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Ranking\Presentations\RankingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Ranking\Presentations\RankingView.xaml">
@@ -85,6 +97,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Ranking\Domains\Messages\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Ranking\Presentations\RankingNowPage.xaml.cs">
+	    <DependentUpon>RankingNowPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

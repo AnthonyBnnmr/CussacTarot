@@ -10,11 +10,15 @@
     </ContentView.BindingContext>
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="listView" ItemsSource="{Binding Gamers}" SelectionMode="None" Grid.Row="0">
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Button Command="{Binding CreateCommand}" Text="Ajouter un Joueur" Margin="5"/>
+        </HorizontalStackLayout>
+        
+        <ListView x:Name="listView" ItemsSource="{Binding Gamers}" SelectionMode="None" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -45,8 +49,6 @@
             </ListView.ItemTemplate>
         </ListView>
         
-        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
-            <Button Command="{Binding CreateCommand}" Text="Ajouter un Joueur" Margin="5"/>
-        </HorizontalStackLayout>
+        
     </Grid>
 </ContentView>

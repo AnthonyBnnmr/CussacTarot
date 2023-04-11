@@ -23,6 +23,17 @@ public class RankingViewModel : ObservableRecipient
         InitListRankingPlayer();
     });
 
+    private bool _IsNow;
+    public bool IsNow
+    {
+        get => _IsNow;
+        set
+        {
+            _IsNow = value;
+            InitListRankingPlayer();
+        }
+    }
+
     public RankingViewModel()
     {
     }
@@ -36,13 +47,13 @@ public class RankingViewModel : ObservableRecipient
         Messenger.Register<RefreshRankingMessage>(this, (recipient, message) =>
         {
             InitListRankingPlayer();
-        });        
+        });
     }
 
     private void InitListRankingPlayer()
     {
         _RankingPlayers.Clear();
-        _RankingPlayers.AddDistinctRange(_RankingService.GetRankingbyPlayer());
+        _RankingPlayers.AddDistinctRange(_RankingService.GetRankingByPlayer(IsNow ? DateTime.Now : null));
     }
 }
 

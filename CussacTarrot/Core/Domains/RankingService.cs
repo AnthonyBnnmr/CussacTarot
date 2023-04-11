@@ -12,10 +12,16 @@ namespace CussacTarot.Core.Domains
             _GameSheetRepository = gameSheetRepository ?? throw new ArgumentNullException(nameof(gameSheetRepository));
         }
 
-        public IEnumerable<RankingByPlayer> GetRankingbyPlayer()
+        public IEnumerable<RankingByPlayer> GetRankingByPlayer(DateTime? dateSearch)
         {
             List<RankingPlayer> rankingPlayers = new();
-            IEnumerable<GameSheet> gamesSheets =_GameSheetRepository.GetAll();
+
+            IEnumerable<GameSheet> gamesSheets = _GameSheetRepository.GetAll();
+            if (dateSearch.HasValue)
+            {
+                gamesSheets = gamesSheets.Where(g => g.PeriodGame.End.HasValue && g.PeriodGame.End.Value.Date == dateSearch.Value.Date);
+            }                
+                
             foreach(GameSheet gameSheet in gamesSheets)
             {
                 foreach(ScoreByGamer scoreByGamer in gameSheet.Scores)
@@ -33,13 +39,14 @@ namespace CussacTarot.Core.Domains
 
             return rankingPlayers.GroupBy(e => e.Gamer).Select(e => new RankingByPlayer()
             {
-                Gamer = e.Key,
+                IdGamer = e.Key.Id,
+                NameSurname = $"{e.Key.Name} {e.Key.Surname}" ,
                 GameScore = e.Select(a => new GameScore()
                 {
                     PeriodGame = a.PeriodGame,
                     Score = a.Score
                 })
-            });
+            }); ;
         }
 
     }

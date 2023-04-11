@@ -11,9 +11,9 @@
     <dg:DataGrid ItemsSource="{Binding RankingPlayers}" SelectionEnabled="False"
              RowHeight="70" HeaderHeight="50" BorderColor="{StaticResource Black}"
              HeaderBackground="{StaticResource Gray100}"
-             PullToRefreshCommand="{Binding RefreshCommand}">
+             PullToRefreshCommand="{Binding RefreshCommand}" RefreshingEnabled="True" IsSortable="True">
         <dg:DataGrid.Columns>
-            <dg:DataGridColumn Title="Joueur" PropertyName="Gamer.NameSurname" />
+            <dg:DataGridColumn Title="Joueur" PropertyName="NameSurname" />
             <dg:DataGridColumn Title="Score" PropertyName="ScoreTotal" />
         </dg:DataGrid.Columns>
         <dg:DataGrid.RowsBackgroundColorPalette>

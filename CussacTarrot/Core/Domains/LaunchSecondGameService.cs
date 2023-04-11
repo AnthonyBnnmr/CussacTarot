@@ -6,20 +6,19 @@ using CussacTarot.Models;
 
 namespace CussacTarot.Core.Domains
 {
-    public class LaunchSecondGameService : LaunchGameService, ILaunchGameService<GameSheet>
+    public class LaunchSecondGameService : LaunchGameService, ILaunchGameService<ScoreByGamer>
     {
         public LaunchSecondGameService(IRepository<int, GameSheet> gameSheetRepository)
             : base(gameSheetRepository) { }
 
-        public void Launch(IEnumerable<GameSheet> listGameSheet)
+        public void Launch(IEnumerable<ScoreByGamer> listScores)
         {
-            if (listGameSheet == null || !listGameSheet.Any())
+            if (listScores == null || !listScores.Any())
             {
                 return;
             }
 
-            IEnumerable<Gamer> gamers = listGameSheet.SelectMany(e => e.Scores)
-                .OrderBy(e => e.Score).Select(e => e.Gamer);
+            IEnumerable<Gamer> gamers = listScores.OrderBy(e => e.Score).Select(e => e.Gamer);
 
             CreateGamesSheets(gamers);
         }

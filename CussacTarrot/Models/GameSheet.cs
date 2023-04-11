@@ -23,7 +23,7 @@ namespace CussacTarot.Models
         [AutoIncrement]
         public int Id { get; set; }
         public DateTime Created { get; init; }
-        public PeriodGame PeriodGame { get; init; }
+        public PeriodGame? PeriodGame { get; init; }
 
         [Reference]
         public List<ScoreByGamer> Scores { get; init; } = new List<ScoreByGamer>();

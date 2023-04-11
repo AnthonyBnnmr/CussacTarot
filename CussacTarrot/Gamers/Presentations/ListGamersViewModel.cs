@@ -36,17 +36,7 @@ public class ListGamersViewModel : ObservableRecipient
     private readonly ObservableCollection<GamerViewModel> _Gamers;
 
     public ObservableCollection<GamerViewModel> Gamers => _Gamers;
-
-    //private GamerViewModel _SelectedGamer;
-    //public GamerViewModel SelectedGamer
-    //{
-    //    get => _SelectedGamer;
-    //    set
-    //    {
-    //        SetProperty(ref _SelectedGamer, value);            
-    //    }
-    //}
-
+    
     public ListGamersViewModel()
     {
     }

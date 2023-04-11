@@ -33,16 +33,19 @@ public static class MauiProgram
             .AddTransient<RankingService>()
             .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
             .AddTransient<ILaunchGameService<Gamer>, LaunchFirstGameService>()
-            .AddTransient<ILaunchGameService<GameSheet>, LaunchSecondGameService>()
+            .AddTransient<ILaunchGameService<ScoreByGamer>, LaunchSecondGameService>()
             .AddTransient<ILaunchGameService, ChooseLaunchGameService>()
             .AddTransient<IRepository<int, Gamer>>((s) => new SqlLiteRepository<int, Gamer>(s.GetRequiredService<IDbConnectionFactory>()))
             .AddTransient<IRepository<int, GameSheet>>((s) => new SqlLiteRepository<int, GameSheet>(s.GetRequiredService<IDbConnectionFactory>()))
-            .AddTransient<ListGamersViewModel>()            
-            .AddTransient<RankingViewModel>()            
+            .AddTransient<GamerPageViewModel>()
+            .AddTransient<GameSheetPageViewModel>()
+            .AddTransient<RankingPageViewModel>()
+            .AddTransient<ListGamersViewModel>()
+            .AddTransient<RankingViewModel>()
             .AddTransient<EditGamerViewModel>()
             .AddTransient<ListGameSheetsViewModel>()
             .AddTransient<EditGameSheetViewModel>()
-            .AddTransient<MainPageViewModel>();
+            .AddTransient<AppShellViewModel>();
 
         Ioc.Default.ConfigureServices(services.BuildServiceProvider());
 

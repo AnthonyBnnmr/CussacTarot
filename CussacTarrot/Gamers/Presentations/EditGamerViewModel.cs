@@ -15,12 +15,12 @@ public class EditGamerViewModel : ObservableRecipient
     public GamerViewModel Gamer
     {
         get
-        {            
+        {
             return _Gamer;
         }
         set
         {
-            if( _Gamer == null && value == null) 
+            if (_Gamer == null && value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
@@ -39,7 +39,13 @@ public class EditGamerViewModel : ObservableRecipient
     private IRelayCommand _ValidateCommand;
     public IRelayCommand ValidateCommand => _ValidateCommand ??= new RelayCommand(() =>
     {
-        _GamersRepository.AddOrUpdate(_Gamer.ToModel());
+        for (int i = 0; i < 5; i++)
+        {
+            _Gamer.Surname = $"{_Gamer.Surname}_{i}";
+            _Gamer.Name = $"{_Gamer.Name}_{i}";
+            _GamersRepository.AddOrUpdate(_Gamer.ToModel());
+        }
+
         Messenger.Send(new FinishEditableGamerMessage());
     });
 
@@ -56,7 +62,7 @@ public class EditGamerViewModel : ObservableRecipient
     });
 
     public EditGamerViewModel()
-    {        
+    {
     }
 
     public EditGamerViewModel(IRepository<int, Gamer> gamersRepository)

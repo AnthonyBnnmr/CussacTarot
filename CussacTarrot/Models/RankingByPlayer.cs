@@ -14,9 +14,10 @@ namespace CussacTarot.Models
     }
 
     public record RankingByPlayer
-    {        
-        public Gamer Gamer { get; init; }
-        public IEnumerable<GameScore> GameScore { get; init; }
+    {
+        public int IdGamer { get; init; }        
+        public required string NameSurname { get; init; }
+        public required IEnumerable<GameScore> GameScore { get; init; }
         public int ScoreTotal => GameScore?.Sum(e => e.Score) ?? 0;
     }
 }

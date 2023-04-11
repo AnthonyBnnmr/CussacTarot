@@ -5,10 +5,10 @@ namespace CussacTarot.Core.Domains
     public class ChooseLaunchGameService : ILaunchGameService
     {
         private readonly ILaunchGameService<Gamer> _LaunchFirstGameService;
-        private readonly ILaunchGameService<GameSheet> _LaunchSecondGameService;
+        private readonly ILaunchGameService<ScoreByGamer> _LaunchSecondGameService;
 
 
-        public ChooseLaunchGameService(ILaunchGameService<Gamer> launchFirstGameService, ILaunchGameService<GameSheet> launchSecondGameService)
+        public ChooseLaunchGameService(ILaunchGameService<Gamer> launchFirstGameService, ILaunchGameService<ScoreByGamer> launchSecondGameService)
         {
             _LaunchFirstGameService = launchFirstGameService ?? throw new ArgumentNullException(nameof(launchFirstGameService));
             _LaunchSecondGameService = launchSecondGameService ?? throw new ArgumentNullException(nameof(launchSecondGameService));
@@ -30,10 +30,10 @@ namespace CussacTarot.Core.Domains
             }
 
 
-            IEnumerable<GameSheet> gameSheets = list.OfType<GameSheet>();
-            if (gameSheets != null && gameSheets.Any())
+            IEnumerable<ScoreByGamer> scoreByGamers = list.OfType<ScoreByGamer>();
+            if (scoreByGamers != null && scoreByGamers.Any())
             {
-                _LaunchSecondGameService.Launch(gameSheets);
+                _LaunchSecondGameService.Launch(scoreByGamers);
                 return;
             }
         }

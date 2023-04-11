@@ -7,12 +7,10 @@
     <ContentView.BindingContext>
         <local:ListGameSheetsViewModel />
     </ContentView.BindingContext>
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
-
         <ListView x:Name="listView" ItemsSource="{Binding GameSheets}" SelectedItem="{Binding SelectedGameSheet}" SelectionMode="None" Grid.Row="0">
             <ListView.ItemTemplate>
                 <DataTemplate>

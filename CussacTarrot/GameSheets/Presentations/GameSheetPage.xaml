@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:gameSheet="clr-namespace:CussacTarot.GameSheets.Presentations"
+             x:Class="CussacTarot.GameSheets.Presentations.GameSheetPage"
+             Title="GameSheetPage">
+    <ContentPage.BindingContext>
+        <gameSheet:GameSheetPageViewModel/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <gameSheet:ListGameSheetsView Grid.Row="0"></gameSheet:ListGameSheetsView>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center"  Margin="5">
+            <Button Command="{Binding LaunchGameCommand}" Text="Lancer" />
+        </HorizontalStackLayout>
+    </Grid>
+    
+</ContentPage>

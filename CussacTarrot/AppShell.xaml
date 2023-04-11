@@ -4,11 +4,35 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CussacTarot"
+    xmlns:gamer="clr-namespace:CussacTarot.Gamers.Presentations"
+    xmlns:gameSheet="clr-namespace:CussacTarot.GameSheets.Presentations"
+    xmlns:ranking="clr-namespace:CussacTarot.Ranking.Presentations"
+    xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
     Shell.FlyoutBehavior="Disabled">
-
-    <ShellContent
-        Title="Cussac Tarot"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <TabBar>
+        <Tab Title="Joueurs">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.User}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate  gamer:GamerPage}" />
+        </Tab>
+        <Tab Title="Feuilles de matchs">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.TableList}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate  gameSheet:GameSheetPage}" />
+        </Tab>
+        <Tab Title="Classement aujourd'hui">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Star}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate  ranking:RankingNowPage}"/>
+        </Tab>
+        <Tab Title="Classement">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.RankingStar}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate  ranking:RankingPage}" />
+        </Tab>
+    </TabBar>
 </Shell>
